@@ -1,25 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [buttonName, setButtonName] = useState("Login");
-  // buttonName will be redeclared every time component re-render thats why we can use const
-  // component will be re-render whenever useState function will be called
-  // reconcialliation happen
-  // and in real DOM only button name will change, so in DOM only button will be replaced but component is re-rendered
-  console.log(
-    "Component will be re-rendered on buttonName change and in DOM only button will be replaced because of reconcialliation"
-  );
 
-  // normal variable
-  // let btnName = "Login";
+  useEffect(() => {}, []);
+
+  // useEffect(()=>{}) called after everytime component is rendered
+
+  // useEffect(()=>{},[]) called after initial render only (just once  )
+  // dependency array is not mandatory
+
+  // useEffect(()=>{},[dependency]) called after initial render + given dependency updates
+
   return (
     <div className="header">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqgqV9sezgYxiiPqaJ3NXXvwDbkzgXpCeBWQ&usqp=CAU" />
       <div>
         <ul>
-          <li>Home</li>
-          <li>contact</li>
-          <li>about</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
           <li>
             <button
               className="btn-class"

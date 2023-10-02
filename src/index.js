@@ -5,31 +5,50 @@ import ReactDOM from "react-dom/client";
 import Header from "./Header.jsx";
 import Body from "./Body.js";
 import Footer from "./Footer";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { About } from "./About.jsx";
+import Contact from "./Contact.js";
+import { ErrorElement } from "./ErrorComponent.jsx";
+import { RestaurantMenu } from "./RestaurantMenu.jsx";
 
 const AppLayout = () => {
   return (
     <div>
       <Header />
-      <Body />
+      <Outlet />
+      {/* Outlet is used to show child elements */}
       <Footer />
     </div>
   );
 };
 
-// Reconcialliation algo uses diff algorithm to compare
-// and find difference between Old and new virtual DOM and then
-// it updates in actual DOM
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
 
-// Vitual DOM is basically a JS comp
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/restaurant/:id",
+        element: <RestaurantMenu />,
+      },
+    ],
+    errorElement: <ErrorElement />,
+  },
+]);
 
-// actual DOM
-// it is tree structure of html
-// <div> </div>
-
-// Vitual DOM
-// it is a JS object
-console.log(<Body />);
-// you can console.log any component you can see it in browser console
 const Root = ReactDOM.createRoot(document.getElementById("root"));
 
-Root.render(<AppLayout />);
+Root.render(<RouterProvider router={appRouter} />);
